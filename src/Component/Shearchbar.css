@@ -1,0 +1,14 @@
+.header {
+  background-color: #000000;
+  transition: background-color 0.3s ease, position 0.3s ease;
+  z-index: 1;
+  padding: 0px;
+}
+
+.header.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

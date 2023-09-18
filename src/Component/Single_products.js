@@ -1,0 +1,950 @@
+import React, { useEffect, useState } from 'react'
+import Shearchbar from './Shearchbar'
+import Navbar from './Navbar'
+import Featuredproducts from './Featuredproducts'
+import { Link } from 'react-router-dom'
+import Newarrivals from './Newarrivals'
+import axios from "axios";
+import secureLocalStorage from "react-secure-storage";
+import baseurl from './Baseurl'
+import Footer from './Footer'
+
+const Single_products = () => {
+
+    const [slideIndex, setSlideIndex] = useState(0);
+    let [images, setimages] = useState([])
+    // const images = [
+    //     'assets/images/products/product-1.jpg',
+    //     'assets/images/products/product-6.jpg',
+    //     'assets/images/products/product-15.jpg',
+    //     'assets/images/products/product-6.1.jpg',
+    // ];
+
+    const plusSlides = (n) => {
+        const newIndex = (slideIndex + n + images.length) % images.length;
+        setSlideIndex(newIndex);
+    };
+
+    const currentSlide = (n) => {
+        setSlideIndex(n);
+    };
+
+    // useStatus
+    let [product_details, setproduct_details] = useState([])
+    let token = secureLocalStorage.getItem("n_token");
+    let productsdetails = secureLocalStorage.getItem("n_singleproducts");
+
+    // get product_details handel
+    useEffect(() => {
+        let items = {
+            "product_id": productsdetails
+        }
+        axios.post(`http://103.104.74.215:3014/website/product_details`, items, {
+            headers: {
+                "token": token,
+            }
+        }
+        ).then((res) => {
+            console.log(res.data.data, "product_details")
+            if (res.data.result) {
+                setimages(res.data.data.product_image)
+                setproduct_details(res.data.data)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+        console.log(product_details)
+    }, [product_details, productsdetails])
+
+    return (
+        <div>
+            <div>
+                {/* header section start */}
+                {/* Modal */}
+                <div className="modal fade offcanvas-modal" id="exampleModal">
+                    <div className="modal-dialog offcanvas-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header offcanvas-header">
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                            </div>
+                            <ul className="header-topbar-nav nav my-4 justify-content-center">
+                                <li className="topbar-nav-item">
+                                    <a className="topbar-nav-link" href="#"><i className="icon las la-map-marker" />Store Locator</a>
+                                </li>
+                                <li className="topbar-nav-item">
+                                    <a className="topbar-nav-link" href="#"><i className="icon las la-shipping-fast" />Track Your Order</a>
+                                </li>
+                            </ul>
+                            <div className="bg-white">
+                                <ul className="quick-links justify-content-center">
+                                    {/* quick-link-item */}
+                                    <li className="quick-link-item d-inline-flex">
+                                        <span className="quick-link-icon flex-shrink-0">
+                                            <a href="#" className="quick-link">
+                                                <i className="las la-user-circle" />
+                                            </a>
+                                        </span>
+                                        <span className="flex-grow-1">
+                                            <a href="#" className="my-account">My account</a>
+                                            <a href="#" className="sign-in">Sign out</a>
+                                        </span>
+                                    </li>
+                                    {/* quick-link-item end */}
+                                    {/* quick-link-item */}
+                                    <li className="quick-link-item d-inline-flex">
+                                        <a href="#" className="quick-link">
+                                            <span className="quick-link-icon flex-shrink-0">
+                                                <span className="badge rounded-pill bg-success">2</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {/* quick-link-item end */}
+                                    {/* quick-link-item */}
+                                    <li className="quick-link-item d-inline-flex">
+                                        <a href="#" className="quick-link">
+                                            <span className="quick-link-icon flex-shrink-0">
+                                                <i className="lar la-heart" />
+                                                <span className="badge rounded-pill bg-success">3</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {/* quick-link-item end */}
+                                </ul>
+                            </div>
+                            <form action="#" className="offcanvas-form">
+                                <input type="text" className="form-control" placeholder="Enter your search key ... " />
+                                <button className="btn-search btn-success" type="submit">
+                                    <i className="las la-search" />
+                                </button>
+                            </form>
+                            {/* offcanvas-mobile-menu start */}
+                            <nav id="offcanvasNav" className="offcanvas-menu">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)">Home</a>
+                                        {/* home sub menu */}
+                                        <ul>
+                                            <li><a href="index.html">Home 1</a></li>
+                                            <li><a href="index-2.html">Home 2</a></li>
+                                            <li><a href="index-3.html">Home 3</a></li>
+                                            <li><a href="index-4.html">Home 4</a></li>
+                                        </ul>
+                                        {/* home sub menu end*/}
+                                    </li>
+                                    <li>
+                                        <a href="shop-grid-left-sidebar.html">shop</a>
+                                        {/* shop mega menu */}
+                                        <ul>
+                                            <li>
+                                                <a href="#">Shop Grid</a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="shop-grid-4-column.html">Shop Grid 4 Column</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="shop-grid-5-column.html">Shop Grid 5 Column</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="shop-grid-left-sidebar.html">Shop Grid Left Sidebar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="shop-grid-right-sidebar.html">Shop Grid Right Sidebar</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Shop Single</a>
+                                                <ul>
+                                                    <li><a href="single-product.html">Shop Single</a></li>
+                                                    <li>
+                                                        <a href="single-product-configurable.html">Shop Variable</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="single-product-affiliate.html">Shop Affiliate</a>
+                                                    </li>
+                                                    <li><a href="single-product-group.html">Shop Group</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">other pages</a>
+                                                <ul>
+                                                    <li><a href="about-us.html">About Page</a></li>
+                                                    <li><a href="cart.html">Cart Page</a></li>
+                                                    <li><a href="checkout.html">Checkout Page</a></li>
+                                                    <li><a href="compare.html">Compare Page</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        {/* shop mega menu end*/}
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">pages</a>
+                                        {/* pages sub menu */}
+                                        <ul>
+                                            <li><a href="about-us.html">About Page</a></li>
+                                            <li><a href="cart.html">Cart Page</a></li>
+                                            <li><a href="checkout.html">Checkout Page</a></li>
+                                            <li><a href="compare.html">Compare Page</a></li>
+                                            <li><a href="login.html">Login &amp; Register Page</a></li>
+                                            <li><a href="myaccount.html">Account Page</a></li>
+                                            <li><a href="wishlist.html">Wishlist Page</a></li>
+                                        </ul>
+                                        {/* pages sub menu end*/}
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">Blog</a>
+                                        {/* blog sub menu */}
+                                        <ul>
+                                            <li>
+                                                <a href="#">Blog Grid</a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="blog-grid-5-column.html">Blog Grid 5 column</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-grid-6-column.html">Blog Grid 6 column</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-grid-left-sidebar.html">Blog Grid Left Sidebar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-grid-right-sidebar.html">Blog Grid Right Sidebar</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Blog List</a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="blog-list-left-sidebar.html">Blog List Left Sidebar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-list-right-sidebar.html">Blog List Right Sidebar</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Blog details</a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="blog-details-left-sidebar.html">Blog details Left Sidebar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-details-right-sidebar.html">Blog details Right Sidbar</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        {/* blog sub menu end*/}
+                                    </li>
+                                    <li>
+                                        <a href="contact.html">Contact</a>
+                                    </li>
+                                </ul>
+                                <div className="offcanvas-social">
+                                    <ul>
+                                        <li>
+                                            <a href="#"><i className="ion-social-facebook" /></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i className="ion-social-twitter" /></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i className="ion-social-instagram" /></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i className="ion-social-google" /></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i className="ion-social-instagram" /></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                            {/* offcanvas-mobile-menu end */}
+                            <div className="header-top">
+                                <ul id="offcanvas-menu2" className="blog-ctry-menu blog-ctry-menu2">
+                                    <li>
+                                        <a href="javascript:void(0)">currency: USD $</a>
+                                        <ul className="category-sub-menu">
+                                            <li><a href="#">EUR $</a></li>
+                                            <li><a href="#">USD $</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><img className="me-1" src="assets/images/icon/us-flag.jpg" alt="img" />English</a>
+                                        <ul className="category-sub-menu">
+                                            <li>
+                                                <a href="#"><img className="me-1" src="assets/images/icon/us-flag.jpg" alt="flags" />
+                                                    English</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img className="me-1" src="assets/images/icon/italiano-flag.jpg" alt="flags" />
+                                                    Français</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <header>
+                    <div className="header-top-bar d-none d-md-block">
+                        <div className="container">
+                            <div className="row align-items-center">
+                                <div className="col-3">
+                                    <div className="social-links social-links-dark">
+                                        <a className="social-link facebook" href="#"><i className="lab la-facebook" /></a>
+                                        <a className="social-link twitter" href="#"><i className="lab la-twitter" /></a>
+                                        <a className="social-link youtube" href="#"><i className="lab la-youtube" /></a>
+                                        <a className="social-link instagram" href="#"><i className="lab la-instagram" /></a>
+                                    </div>
+                                </div>
+                                <div className="col-9">
+                                    <ul className="header-topbar-nav nav">
+                                        <li className="topbar-nav-item">
+                                            <a className="topbar-nav-link" href="#"><i className="icon las la-map-marker" />Store Locator</a>
+                                        </li>
+                                        <li className="topbar-nav-item">
+                                            <a className="topbar-nav-link" href="#"><i className="icon las la-shipping-fast" />Track Your Order</a>
+                                        </li>
+                                        {/*   <li class="topbar-nav-item dropdown">
+                          <a class="topbar-nav-link" href="#" data-bs-toggle="dropdown" id="euro"><span>EUR $</span> <i class="ion-chevron-down"></i></a>
+
+                          <ul class="dropdown-menu" aria-labelledby="usd">
+                              <li><a class="dropdown-item" href="#">EUR $</a></li>
+                              <li><a class="dropdown-item" href="#">USD $</a></li>
+                          </ul>
+                      </li>
+                      <li class="topbar-nav-item dropdown">
+                          <a class="topbar-nav-link" href="#" data-bs-toggle="dropdown" id="english">
+                              <img src="assets/images/icon/us-flag.jpg" alt="image_not_found" />
+                              <span>English</span> <i class="ion-chevron-down"></i></a>
+
+                          <ul class="dropdown-menu" aria-labelledby="english">
+                              <li><a class="dropdown-item" href="#"><img src="assets/images/icon/us-flag.jpg" alt="us-flag">English</a></li>
+                              <li><a class="dropdown-item" href="#"><img src="assets/images/icon/italiano-flag.jpg" alt="italiano-flag"> Italiano</a></li>
+                          </ul>
+                      </li> */}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Shearchbar />
+
+                    <Navbar />
+
+                </header>
+
+                <nav className="breadcrumb-section">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <ol className="breadcrumb bg-transparent m-0 p-0 align-items-center">
+                                    <li className="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li className="breadcrumb-item active" aria-current="page">Warburtons 9 Crumpets </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                {/* bread crumb section end */}
+                <section>
+                    <div className="container">
+                        <div className="row mb-n7">
+                            <div className="col-md-5 mb-7">
+                                <div className="modal-gallery-slider">
+                                    <div className="gallery position-relative">
+                                        {/* <span className="badge bg-success product-badge" style={{ zIndex: "0" }}>new</span> */}
+                                        <div>
+                                            {/* <h2 style={{ textAlign: 'center' }}>Image Gallery</h2> */}
+                                            <div className="container">
+                                                <div className="mySlides">
+                                                    <div className="numbertext">
+                                                        {slideIndex + 1} / {images.length}
+                                                    </div>
+
+                                                    <img src={`http://103.104.74.215:3014/uploads/${images[slideIndex]}`} style={{ width: '100%' }} alt={`Image ${slideIndex + 1}`} />
+                                                </div>
+                                                <a className="prev" style={{ cursor: "pointer" }} onClick={() => plusSlides(-1)}>❮</a>
+                                                <a className="next" style={{ float: "right", cursor: "pointer" }} onClick={() => plusSlides(1)}>❯</a>
+                                                <div className="row justify-content-center">
+                                                    {images.map((image, index) => (
+
+                                                        <img
+                                                            className={`demo cursor${index === slideIndex ? ' active' : ''}`}
+                                                            src={`http://103.104.74.215:3014/uploads/${image}`}
+                                                            style={{ width: '20%' }}
+                                                            onClick={() => currentSlide(index)}
+                                                            alt={`Image ${index + 1}`}
+                                                        />
+
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className="col-md-7 mb-7">
+                                <div className="modal-product-des" style={{ marginTop: "25px" }}>
+                                    <h3 className="modal-product-title">{product_details?.product_name}</h3>
+                                    <h3 className="modal-product-sub-title">Category: {product_details?.category_name}</h3>
+                                    <div className="reviews">
+                                        <span className="las la-star" />
+                                        <span className="las la-star" />
+                                        <span className="las la-star" />
+                                        <span className="las la-star" />
+                                        <span className="las la-star" />
+                                    </div>
+
+                                    <div className="pt-1">
+                                        <span className="" style={{ fontSize: "20px" }}> Offer</span>
+                                        <span className="badge badge-lg bg-dark">{product_details?.offer_percent}%</span>
+                                    </div>
+
+                                    <div className="product-price-wrapp-lg">
+                                        <span className="product-regular-price-lg">€{product_details?.mrp}</span>
+                                        <span className="product-price-on-sale-lg">€{product_details?.price}</span>
+                                        {/* <span className="badge badge-lg bg-dark">Save 8%</span> */}
+                                    </div>
+                                    <div className="product-description-short pb-7 mb-7">
+                                        <ul>
+                                            <li>
+                                                {product_details?.description}
+                                            </li>
+                                        </ul>
+
+                                        {/* //{product_details?.quantity.map((items) => {
+                                        //    return (
+                                        //        <button className='btn btn-success m-1'>
+                                        //            {items}
+                                        //        </button>
+                                        //    )
+                                        //})} */}
+
+                                        {/* <button className='btn btn-success m-1'>
+                                            {product_details?.quantity[1]}
+                                        </button> */}
+                                        {/* <button className='btn btn-success m-1'>
+                                        {product_details?.quantity[2]}
+                                        </button>
+                                        <button className='btn btn-success m-1'>
+                                            {product_details?.quantity[3]}
+                                        </button> */}
+
+
+
+                                    </div>
+                                    {/*  <div class="product-variants mb-7">
+                      <div class="product-variants-item">
+                          <span class="control-label">Size</span>
+                          <select class="form-control form-control-select">
+                              <option value="1" title="S" selected="selected">S</option>
+                              <option value="2" title="M">M</option>
+                              <option value="3" title="L">L</option>
+                              <option value="4" title="XL">XL</option>
+                          </select>
+                      </div>
+                      <div class="product-variants-item">
+                          <span class="control-label">color</span>
+                          <ul>
+                              <li class="input-container">
+                                  <label>
+                                      <input class="input-color" type="checkbox">
+                                      <span class="color"></span>
+                                  </label>
+                              </li>
+                              <li class="input-container">
+                                  <label>
+                                      <input class="input-color" type="checkbox" checked="checked">
+                                      <span class="color"></span>
+                                  </label>
+                              </li>
+                          </ul>
+                      </div>
+                  </div> */}
+                                    <div className="product-add-to-cart">
+                                        <span className="control-label">Quantity</span>
+                                        <div className="product-count style d-flex my-7">
+                                            <div className="count d-flex">
+                                                <input type="number" min={1} max={100} step={1} defaultValue={1} />
+                                                <div className="button-group">
+                                                    <button className="count-btn increment">
+                                                        <span className="las la-angle-up" />
+                                                    </button>
+                                                    <button className="count-btn decrement">
+                                                        <span className="las la-angle-down" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button data-bs-toggle="modal" data-bs-target="#addto-cart-modal" className="modal-add-to-cart-btn">
+                                                    Add to cart
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className="product-add-to-card">
+                                            <a className="product-add-to-card-item" href="#"><i className="lar la-heart" /> Add to wishlist</a>
+                                            <a className="product-add-to-card-item" href="#"><i className="las la-sync" /> My wishlist</a>
+                                        </div>
+                                        <div className="product-social-sharing mt-7">
+                                            <span>Share</span>
+                                            <ul>
+                                                <li className="facebook"><a href="#" target="_blank"><i className="lab la-facebook-f" /></a></li>
+                                                <li className="twitter"><a href="#" target="_blank"><i className="lab la-twitter" /></a></li>
+                                                <li className="pinterest"><a href="#" target="_blank"><i className="lab la-pinterest" /></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section className="section-mb section-mt">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <ul className="nav nav-tabs single-product-tab justify-content-center" id="myTab" role="tablist">
+                                    <li className="nav-item" role="presentation">
+                                        <a className="nav-link" data-bs-toggle="tab" href="#description" role="tab">Description</a>
+                                    </li>
+                                    <li className="nav-item" role="presentation">
+                                        <a className="nav-link" data-bs-toggle="tab" href="#productdetails" role="tab" aria-selected="false">Product Details</a>
+                                    </li>
+                                    <li className="nav-item" role="presentation">
+                                        <a className="nav-link active" data-bs-toggle="tab" href="#reviews" role="tab" aria-selected="true">Reviews</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="tab-content" id="myTabContent">
+                            <div className="tab-pane fade" id="description" role="tabpanel">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="single-product-desc">
+                                            <p>
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit, sed
+                                                do eiusmod tempor incididunt ut labore et dolore magna
+                                                aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                                ullamco laboris nisi ut aliquip ex ea commo consequat. Duis
+                                                aute irure dolor in reprehend in voluptate velit esse cillum
+                                                dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                                cupidatat non proident, sunt in culpa qui officia deserunt
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="productdetails" role="tabpanel">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="single-product-desc">
+                                            <div className="product-anotherinfo-wrapper">
+                                                <ul>
+                                                    <li><span>Weight</span> 400 g</li>
+                                                    <li><span>Dimensions</span>10 x 10 x 15 cm</li>
+                                                    <li><span>Materials</span> 60% cotton, 40% polyester</li>
+                                                    <li>
+                                                        <span>Other Info</span> American heirloom jean shorts
+                                                        pug seitan letterpress
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade active show" id="reviews" role="tabpanel">
+                                <div className="single-product-desc">
+                                    <div className="row">
+                                        <div className="col-lg-7">
+                                            <div className="review-wrapper">
+                                                <div className="single-review">
+                                                    <div className="review-img">
+                                                        <img src="assets/images/testimonial/1.png" alt />
+                                                    </div>
+                                                    <div className="review-content">
+                                                        <div className="review-top-wrap">
+                                                            <div className="review-left">
+                                                                <div className="review-name">
+                                                                    <h4>White Lewis</h4>
+                                                                </div>
+                                                                <div className="rating-product">
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="review-left">
+                                                                <a href="#">Reply</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="review-bottom">
+                                                            <p>
+                                                                Vestibulum ante ipsum primis aucibus orci
+                                                                luctustrices posuere cubilia Curae Suspendisse
+                                                                viverra ed viverra. Mauris ullarper euismod
+                                                                vehicula. Phasellus quam nisi, congue id nulla.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="single-review child-review">
+                                                    <div className="review-img">
+                                                        <img src="assets/images/testimonial/2.png" alt />
+                                                    </div>
+                                                    <div className="review-content">
+                                                        <div className="review-top-wrap">
+                                                            <div className="review-left">
+                                                                <div className="review-name">
+                                                                    <h4>White Lewis</h4>
+                                                                </div>
+                                                                <div className="rating-product">
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                    <i className="ion-android-star" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="review-left">
+                                                                <a href="#">Reply</a>
+                                                            </div>
+                                                        </div>
+                                                        <div className="review-bottom">
+                                                            <p>
+                                                                Vestibulum ante ipsum primis aucibus orci
+                                                                luctustrices posuere cubilia Curae Sus pen disse
+                                                                viverra ed viverra. Mauris ullarper euismod
+                                                                vehicula.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-5">
+                                            <div className="ratting-form-wrapper">
+                                                <h3>Add a Review</h3>
+                                                <div className="ratting-form">
+                                                    <form action="#">
+                                                        <div className="star-box">
+                                                            <span>Your rating:</span>
+                                                            <div className="rating-product">
+                                                                <i className="ion-android-star" />
+                                                                <i className="ion-android-star" />
+                                                                <i className="ion-android-star" />
+                                                                <i className="ion-android-star" />
+                                                                <i className="ion-android-star" />
+                                                            </div>
+                                                        </div>
+                                                        <div className="row">
+                                                            <div className="col-md-6">
+                                                                <div className="rating-form-style mb-10">
+                                                                    <input placeholder="Name" type="text" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-6">
+                                                                <div className="rating-form-style mb-10">
+                                                                    <input placeholder="Email" type="email" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-md-12">
+                                                                <div className="rating-form-style form-submit">
+                                                                    <textarea name="Your Review" placeholder="Message" defaultValue={""} />
+                                                                    <button type="submit" className="btn btn-dark">
+                                                                        Submit
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* new arrival carousel section start */}
+                <Featuredproducts />
+                {/* new arrival carousel section end */}
+                {/* featured carousel section start */}
+                <Newarrivals />
+                {/* featured carousel section end */}
+                {/* news letter section start */}
+                <section className="news-letter-sectoin bg-success">
+                    <div className="container">
+                        <div className="row align-items-center">
+                            <div className="col-lg-8 col-xl-9">
+                                <div className="news-letter-wrap">
+                                    <div className="news-letter-title">
+                                        <h3 className="title">DOWNLOAD OUR APP</h3>
+                                        <p>Download now to get more offers.</p>
+                                    </div>
+                                    {/* <form id="mc-form" class="news-letter-form" action="#">
+                      <input id="mc-email" class="form-control" name="email" type="email" placeholder="Your email address">
+                      <button class="sign-up-btn" type="submit">Sign up</button>
+                  </form> */}
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-xl-3">
+                                <div className="text-center text-lg-end mt-7 mt-lg-0">
+                                    <a className="store-btn" href="#">
+                                        <img src="assets/images/icon/app_store.png" alt="images_not_found" />
+                                    </a>
+                                    <a className="store-btn" href="#">
+                                        <img src="assets/images/icon/google_play.png" alt="images_not_found" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* news letter section end */}
+                {/* service section start */}
+                <section className="service-section section-mt section-mb">
+                    <div className="container">
+                        <div className="services">
+                            <div className="row mb-n7">
+                                <div className="col-sm-6 col-lg-3 mb-7">
+                                    <div className="service-item">
+                                        <img className="service-icon" src="assets/images/icon/service1.png" alt="images_not_found" />
+                                        <h3 className="service-title">100% SECURE PAYMENTS</h3>
+                                        <p>Moving your card details to a much more secured place</p>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6 col-lg-3 mb-7">
+                                    <div className="service-item">
+                                        <img className="service-icon" src="assets/images/icon/service2.png" alt="images_not_found" />
+                                        <h3 className="service-title">TRUSTPAY</h3>
+                                        <p>100% Payment Protection. Easy Return Policy</p>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6 col-lg-3 mb-7">
+                                    <div className="service-item">
+                                        <img className="service-icon" src="assets/images/icon/service3.png" alt="images_not_found" />
+                                        <h3 className="service-title">HELP CENTER</h3>
+                                        <p>GGot a question? Look no further.Browse our FAQs or submit your query here.</p>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6 col-lg-3 mb-7">
+                                    <div className="service-item">
+                                        <img className="service-icon" src="assets/images/icon/service4.png" alt="images_not_found" />
+                                        <h3 className="service-title">Express Shipping</h3>
+                                        <p>Fast, reliable delivery from global warehouses</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* service section end */}
+                {/* main content end */}
+                {/* footer section start */}
+                <Footer />
+                {/* footer section end */}
+                {/* Modal */}
+                <div className="modal fade" id="product-modal">
+                    <div className="modal-dialog modal-dialog-centered product-modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" />
+                            </div>
+                            <div className="modal-body">
+                                <div className="row mb-n7">
+                                    <div className="col-md-5 mb-7">
+                                        <div className="modal-gallery-slider">
+
+                                            <div className="gallery position-relative">
+                                                <span className="badge bg-success product-badge">new</span>
+                                                <div>
+                                                    <h2 style={{ textAlign: 'center' }}>Image Gallery</h2>
+                                                    <div className="container">
+                                                        <div className="mySlides">
+                                                            <div className="numbertext">
+                                                                {slideIndex + 1} / {images.length}
+                                                            </div>
+                                                            <img src={images[slideIndex]} style={{ width: '100%' }} alt={`Image ${slideIndex + 1}`} />
+                                                        </div>
+                                                        <a className="prev" style={{ cursor: "pointer" }} onClick={() => plusSlides(-1)}>❮</a>
+                                                        <a className="next" style={{ float: "right", cursor: "pointer" }} onClick={() => plusSlides(1)}>❯</a>
+                                                        <div className="row justify-content-center">
+                                                            {images.map((image, index) => (
+
+                                                                <img
+                                                                    className={`demo cursor${index === slideIndex ? ' active' : ''}`}
+                                                                    src={image}
+                                                                    style={{ width: '20%' }}
+                                                                    onClick={() => currentSlide(index)}
+                                                                    alt={`Image ${index + 1}`}
+                                                                />
+
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-7 mb-7">
+                                        <div className="modal-product-des">
+                                            <h3 className="modal-product-title">Tropical Juice Drink</h3>
+                                            <h3 className="modal-product-sub-title">Reference: demo_3</h3>
+                                            <div className="reviews">
+                                                <span className="las la-star" />
+                                                <span className="las la-star" />
+                                                <span className="las la-star" />
+                                                <span className="las la-star" />
+                                                <span className="las la-star" />
+                                            </div>
+                                            <div className="product-price-wrapp-lg">
+                                                <span className="product-regular-price-lg">$43.80</span>
+                                                <span className="product-price-on-sale-lg">$39.42</span>
+                                                <span className="badge badge-lg bg-dark">Save 8%</span>
+                                            </div>
+                                            <div className="product-description-short">
+                                                <ul>
+                                                    <li>
+                                                        Score extra points when it comes to your sporty look with the Juicy Couture™ Juicy Quilted Terry
+                                                        Track Jacket.
+                                                    </li>
+                                                    <li>
+                                                        Soft terry construction in a quilted design.
+                                                    </li>
+                                                    <li>
+                                                        Front zipper closure.
+                                                    </li>
+                                                    <li>
+                                                        61% cotton, 39% polyester;<br />Lining: 58% cotton, 42% polyester.
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div className="product-add-to-cart">
+                                                <span className="control-label">Quantity</span>
+                                                <div className="product-count style d-flex my-4">
+                                                    <div className="count d-flex">
+                                                        <input type="number" min={1} max={100} step={1} defaultValue={1} />
+                                                        <div className="button-group">
+                                                            <button className="count-btn increment">
+                                                                <span className="las la-angle-up" />
+                                                            </button>
+                                                            <button className="count-btn decrement">
+                                                                <span className="las la-angle-down" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <button data-bs-toggle="modal" data-bs-target="#add-to-cart" className="modal-add-to-cart-btn">
+                                                            Add to cart
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div className="product-add-to-card">
+                                                    <a className="product-add-to-card-item" href="#"><i className="lar la-heart" /> Add to wishlist</a>
+                                                    {/*  <a class="product-add-to-card-item" href="#"><i class="las la-sync"></i> My wishlist</a> */}
+                                                </div>
+                                                <div className="product-social-sharing">
+                                                    <span>Share</span>
+                                                    <ul>
+                                                        <li className="facebook"><a href="#" target="_blank"><i className="lab la-facebook-f" /></a></li>
+                                                        <li className="twitter"><a href="#" target="_blank"><i className="lab la-twitter" /></a></li>
+                                                        <li className="pinterest"><a href="#" target="_blank"><i className="lab la-pinterest" /></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Modal */}
+                <div className="modal fade" id="product-modal-compare">
+                    <div className="modal-dialog modal-dialog-centered compare-modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" />
+                            </div>
+                            <div className="modal-body">
+                                <p> <i className="las la-check" /> Product added to compare.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* Modal */}
+                <div className="modal fade" id="product-modal-wishlist">
+                    <div className="modal-dialog modal-dialog-centered wishlist-modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" />
+                            </div>
+                            <div className="modal-body">
+                                <p> You must be logged in to manage your wishlist.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="addto-cart-modal">
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header bg-dark border-bottom-0 justify-content-center">
+                                <span className="ion-android-done me-5" />
+                                <h4 className="modal-title text-center">Product successfully added to your shopping cart</h4>
+                                <button type="button" className="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close">×</button>
+                            </div>
+                            <div className="modal-body p-5">
+                                <div className="row align-items-center align-items-lg-start">
+                                    <div className="col-lg-5">
+                                        <div className="row align-items-center align-items-lg-start">
+                                            <div className="col-md-6">
+                                                <img className="product-image" src="assets/images/products/product-13.jpg" alt="images_not_found" />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <h6 className="product-name">Snacking Essentials Walnuts</h6>
+                                                <ul className="quntity-list">
+                                                    <li>$23.06</li>
+                                                    <li>Color: White</li>
+                                                    <li>Quantity:1</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-7">
+                                        <div className="cart-content">
+                                            <p className="title">There are 3 items in your cart.</p>
+                                            <p><span>Total products:</span>$23.06</p>
+                                            <p><span>Total shipping:</span>Free</p>
+                                            <p><span>Taxes:</span> $0.00</p>
+                                            <p><span>Total:</span> $23.06 (tax excl.)</p>
+                                            <div className="cart-content-btn">
+                                                {/*  <button class="btn btn-sm btn-dark  mt-3 mt-sm-0" data-bs-dismiss="modal"><a href="cart.html" style="color :white;">View cart</a></button> */}
+                                                <Link to="/card" style={{ color: 'white' }}> <button className="btn btn-sm btn-dark mt-3 mt-sm-0"> View cart</button></Link>
+                                                <Link to="/checkout" style={{ color: 'white' }}><button className="btn btn-sm btn-dark mt-3 mt-sm-0">  Proceed to checkout</button></Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    )
+}
+
+export default Single_products

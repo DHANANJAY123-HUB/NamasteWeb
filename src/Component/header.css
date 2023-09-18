@@ -1,0 +1,102 @@
+@media only screen and (min-width : 600px) and (max-width: 1800px) {
+    .freshfruidsslider {
+        position: relative;
+        top: -180px;
+        margin-bottom: -180px;
+
+    }
+
+    /* .maintext {
+        position: relative;
+    }
+
+    .slidertext {
+        position: absolute;
+        top: 15px;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .text1 {
+        position: absolute;
+        font-size: 50px;
+        left: 100px;
+        top:5px;
+    
+    }
+
+    .text2 {
+        position: absolute;
+        font-size: 50px;
+        top: 80px;
+        left: 100px;
+    }
+
+    .text3 {
+        position: absolute;
+        font-size: 18px;
+        top: 150px;
+        left: 100px;
+    }
+
+    .textbtn {
+        position: absolute;
+        top: 185px;
+        font-size: 15px;
+        width: 100px;
+        padding-left: 5px;
+        padding-right: 0px;
+        left: 100px;
+    } */
+}
+
+ @media only screen and (min-width : 320px) and (max-width: 600px) {
+
+
+    .bannerimg{
+        width: 100%;
+        height: 300px;
+    }
+    
+    /* .maintext {
+        position: relative;
+    }
+
+    .slidertext {
+        position: absolute;
+        top: 15px;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .text1 {
+        font-size: 15px;
+    }
+
+    .text2 {
+        position: absolute;
+        font-size: 15px;
+        top: 20px;
+    }
+
+    .text3 {
+        position: absolute;
+        font-size: 8px;
+        top: 45px;
+    }
+
+    .textbtn {
+        position: absolute;
+        top: 65px;
+        font-size: 10px;
+        width: 100px;
+        padding-left: 5px;
+        padding-right: 0px;
+    } */
+} 
+
+/* .custom-arrow:hover {
+    color: lightgreen;
+    border-color: lightgreen;
+    z-index: 0;
+} */

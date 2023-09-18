@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .sticky {
+            position: sticky; /* Remove the quotes around "sticky" */
+            top: 0;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <head>hellll</head>
+    <div>
+        hel
+    </div>
+    <div>
+        hel
+    </div>
+       <div>
+        hel
+    </div>
+    <div>
+        hel
+    </div>
+    <div>
+        hel
+    </div>   <div>
+        hel
+    </div>
+    
+    <header class="sticky">
+        <!-- Your header content goes here -->
+        <h1>Hello boss</h1>
+    </header>
+
+    <div style="height: 1500px;">
+        <!-- This div creates some space to scroll and see the sticky header effect -->
+    </div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            const scrollY = window.scrollY;
+
+            if (scrollY > 0) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
+            }
+        });
+    </script>
+</body>
+</html>

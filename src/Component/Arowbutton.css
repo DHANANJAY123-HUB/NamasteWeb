@@ -1,0 +1,37 @@
+/* Add these styles to your CSS */
+.custom-prev-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .custom-next-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+
+  /* Example CSS for arrow layout */
+  .arrow-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .arrow {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    margin: 0 10px; /* Add some spacing between arrows */
+  }
+  
+  .next-arrow {
+    margin-left: 10px; /* Push the next arrow to the right */
+    margin-bottom: 20px;
+    position: absolute;
+    top: 0%;
+    margin-left: 50px;
+  }

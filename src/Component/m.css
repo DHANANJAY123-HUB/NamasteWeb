@@ -1,0 +1,19 @@
+/* CSS for the vertical slider */
+.slick-slider {
+  height: 300px; /* Set your desired height for the slider */
+  width: 200px; /* Set your desired width for the slider */
+  margin: 0 auto;
+}
+
+.slick-slide {
+  height: 80px; /* Set the height of each slide */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ccc; /* Set the background color for slides */
+}
+
+.slick-dots {
+  position: absolute;
+  top: 10px; /* Adjust the position of the dots as needed */
+}
